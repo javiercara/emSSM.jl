@@ -1,4 +1,4 @@
-function ABCDQR_em_s(y,u,nx;Ai=0,Bi=0,Ci=0,Di=0,Qi=0,Ri=0,max_iter=100,tol=1e-6,txo=true)
+function ABCDQR_em_s(y,u,nx,Ai,Bi,Ci,Di,Qi,Ri,m1i,max_iter,tol,txo)
 	#
 	# estimate A, B, C, D, Q, R, m1, P1 using the STATIONARY EM algorithm for model
 	# 
@@ -16,20 +16,13 @@ function ABCDQR_em_s(y,u,nx;Ai=0,Bi=0,Ci=0,Di=0,Qi=0,Ri=0,max_iter=100,tol=1e-6,
 	u,nu,nt = byrow(u)
 	
 	# initial values
-	if Ai == 0 
-		# initial point with subspace algorithm
-		i = nx+1
-		Ai,Ci,Qi,Ri,Si = ACQRS_ssi1(y,nx,i)
-		Bi=zeros(nx,nu)
-		Di=zeros(ny,nu)
-	end
 	A = Ai
 	B = Bi
 	C = Ci
 	D = Di
 	Q = Qi
 	R = Ri	
-	m1 = C\(y[:,1] - D*u[:,1]) # x11 = C^{-1}(y_1 - Du_1 - v_1)
+	m1 = m1i
 	P1 = zeros(nx,nx)
 	
 	# log-likelihood values

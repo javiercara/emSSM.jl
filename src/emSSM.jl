@@ -3,6 +3,47 @@ __precompile__()
 
 module emSSM
 
+#######################################################
+# types
+#######################################################
+
+typealias ScalarOrArray{T} Union{T, Array{T}}
+
+type SSM
+	# algorithms restricted to matrices
+	A::Array{Float64,2}
+	B::Array{Float64,2}
+	C::Array{Float64,2}
+	D::Array{Float64,2}
+	Q::Array{Float64,2}
+	R::Array{Float64,2}
+	S::Array{Float64,2}
+	m1::Array{Float64,1}
+	P1::Array{Float64,2}
+	loglik::Float64
+	aic::Float64
+end
+
+function SSM0()
+	# initialize SSM type with zeros
+	m = zeros(2,2) # matrix of zeros
+	v = zeros(2) # vector of zeros
+	A = SSM(m,m,m,m,m,m,m,v,m,0.,0.)
+	
+	return A
+	
+end
+
+export SSM, SSM0
+
+#####################################################
+# em
+#####################################################
+
+include("EM/em.jl")
+
+export em
+
 #####################################################
 # auxfun
 #####################################################

@@ -1,4 +1,4 @@
-function ACQR_em_s(y,nx;Ai=0,Ci=0,Qi=0,Ri=0,max_iter=100,tol=1e-6,txo=true)
+function ACQR_em_s(y,nx,Ai,Ci,Qi,Ri,m1i,max_iter,tol,txo)
 	#
 	# STATIONARY EM algorithm for model
 	# 
@@ -15,16 +15,11 @@ function ACQR_em_s(y,nx;Ai=0,Ci=0,Qi=0,Ri=0,max_iter=100,tol=1e-6,txo=true)
 	y,ny,nt = byrow(y)
 
 	# initial values
-	if Ai == 0 
-		# initial point with subspace algorithm
-		i = nx+1
-		Ai,Ci,Qi,Ri,Si = ACQRS_ssi1(y,nx,i)
-	end
 	A = Ai
 	C = Ci
 	Q = Qi
 	R = Ri	
-	m1 = C\y[:,1] # x11 = C^{-1}(y_1 - v_1)
+	m1 = m1i
 	P1 = zeros(nx,nx)
 
 	# log-likelihood values
